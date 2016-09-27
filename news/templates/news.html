@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+<div class="row">
+<div class="jumbotron">
+
+    <ul class="sidebar-menu">
+      <li class="header"><h3><font color="white">News</font></h3></li>
+
+      {% for news in all_news %}
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-envelope"></i> {{news.company}} - {{news.subject}}<i class="fa fa-angle-left pull-right"></i><span class="pull-right">{{news.datetime}} </span>
+          </a>
+          <ul class="treeview-menu">
+          <font color="white">
+            <li>{{news.body | safe}}</li>
+          </font>
+        </ul>
+          </li>
+      {% endfor %}
+    </ul>
+</div>
+</div>
+</div>
+{% endblock %}
