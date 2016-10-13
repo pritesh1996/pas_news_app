@@ -1,4 +1,49 @@
 {% extends 'base.html' %}
+
+{% block feature %}
+  <style>
+    .page {
+      padding-left: 0;
+      margin: 20px 0;
+      text-align: center;
+      list-style: none;
+    }
+    .page li {
+      display: inline;
+    }
+    .page li > a,
+    .page li > span {
+      color:white;
+      display: inline-block;
+      padding: 5px 14px;
+      background-color: #2c3e50;
+      border: 1px solid #2c3e50;
+      border-radius: 15px;
+    }
+    .page li > a:hover,
+    .page li > a:focus {
+      text-decoration: none;
+      background-color: #1a2226;
+    }
+    .page .next > a,
+    .page .next > span {
+      float: right;
+    }
+    .page .previous > a,
+    .page .previous > span {
+      float: left;
+    }
+    .page .disabled > a,
+    .page .disabled > a:hover,
+    .page .disabled > a:focus,
+    .page .disabled > span {
+      color: white;
+      cursor: not-allowed;
+      background-color: white;
+}
+  </style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
 <div class="row">
@@ -6,7 +51,6 @@
 
     <ul class="sidebar-menu">
       <li class="header"><h3><font color="white">News</font></h3></li>
-
       {% for news in all_news %}
         <li class="treeview">
           <a href="#">
@@ -20,6 +64,28 @@
           </li>
       {% endfor %}
     </ul>
+    <ul class="page">
+      {% if all_news.has_previous %}
+        <li class="previous" >  <a  href="?page={{ all_news.previous_page_number }}">previous</a> </li>
+      {% else %}
+        <li class="previous" class="disabled">  <a >previous</a> </li>
+      {% endif %}
+
+      {% for i in range %}
+      <li ><a href="?page={{ i }}" >{{i}}</a></li>
+      {% endfor %}
+
+      <li class="next">
+        {% if all_news.has_next %}
+            <a  href="?page={{ all_news.next_page_number }}">next</a>
+        {% else %}
+            <a >next</a>
+        {% endif %}
+      </li>
+    </ul>
+    <span class="current" >
+            Page {{ all_news.number }} of {{ all_news.paginator.num_pages }}.
+    </span>
 </div>
 </div>
 </div>
